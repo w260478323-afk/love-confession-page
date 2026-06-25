@@ -15,7 +15,7 @@ body {
   color: #fff7fb;
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", Arial,
     sans-serif;
-  background: #141025;
+  background: #081526;
 }
 
 .page {
@@ -27,42 +27,162 @@ body {
   padding: 28px 20px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 18% 22%, rgba(255, 190, 210, 0.34), transparent 24%),
-    radial-gradient(circle at 82% 16%, rgba(147, 197, 253, 0.22), transparent 25%),
-    linear-gradient(145deg, #140f2d 0%, #2b1741 44%, #4b1e3b 100%);
+    radial-gradient(circle at 50% 18%, rgba(234, 210, 255, 0.18), transparent 18%),
+    linear-gradient(180deg, #060a22 0%, #102744 48%, #092638 100%);
 }
 
-/* 星空背景：使用多层阴影营造星点，不依赖图片资源 */
+/* 会动的星辰大海背景：上方星空漂移，下方海面柔和起伏 */
+.sky-sea {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sky-sea::before {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  width: 150px;
+  height: 150px;
+  content: "";
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 35%, #fffaf0 0 22%, #ffe8b8 23% 38%, transparent 39%),
+    radial-gradient(circle, rgba(255, 233, 190, 0.36), transparent 68%);
+  box-shadow: 0 0 44px rgba(255, 232, 186, 0.52);
+  transform: translateX(-50%);
+  animation: moonGlow 6s ease-in-out infinite;
+}
+
+.sky-sea::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    radial-gradient(circle at 20% 24%, rgba(125, 211, 252, 0.16), transparent 18%),
+    radial-gradient(circle at 76% 18%, rgba(255, 180, 215, 0.13), transparent 20%),
+    linear-gradient(180deg, rgba(3, 6, 24, 0) 0%, rgba(3, 16, 33, 0.35) 68%);
+}
+
 .stars,
 .stars::before,
 .stars::after {
   position: absolute;
-  inset: 0;
+  inset: -20%;
   content: "";
   background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(255, 220, 236, 0.75) 0 1px, transparent 1.7px);
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(190, 225, 255, 0.8) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255, 214, 232, 0.72) 0 1px, transparent 1.7px);
   background-position:
     0 0,
-    28px 42px;
+    34px 52px,
+    76px 18px;
   background-size:
-    76px 76px,
-    118px 118px;
-  opacity: 0.48;
-  animation: starDrift 18s linear infinite;
+    84px 84px,
+    132px 132px,
+    178px 178px;
+  opacity: 0.55;
+  animation: starDrift 34s linear infinite;
 }
 
 .stars::before {
-  transform: scale(1.35);
-  opacity: 0.23;
-  animation-duration: 28s;
+  transform: scale(1.25) rotate(4deg);
+  opacity: 0.3;
+  animation-duration: 48s;
 }
 
 .stars::after {
-  transform: scale(0.78);
-  opacity: 0.32;
-  animation-duration: 22s;
+  transform: scale(0.78) rotate(-5deg);
+  opacity: 0.46;
+  animation-duration: 28s;
   animation-direction: reverse;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.92), transparent);
+  filter: drop-shadow(0 0 8px rgba(192, 226, 255, 0.8));
+  opacity: 0;
+  transform: rotate(-24deg);
+  animation: shootingStar 9s ease-in-out infinite;
+}
+
+.shooting-star-one {
+  left: 72%;
+  top: 16%;
+}
+
+.shooting-star-two {
+  left: 30%;
+  top: 26%;
+  animation-delay: 4.5s;
+  animation-duration: 12s;
+}
+
+.sea {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -8%;
+  height: 45%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 226, 177, 0.18), transparent 36%),
+    linear-gradient(180deg, rgba(12, 67, 96, 0.62), rgba(3, 27, 46, 0.96));
+  clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+}
+
+.moon-road {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(42vw, 260px);
+  height: 100%;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 239, 190, 0.28) 0 4px,
+      rgba(255, 239, 190, 0.04) 4px 18px
+    );
+  filter: blur(0.4px);
+  opacity: 0.52;
+  transform: translateX(-50%) perspective(280px) rotateX(64deg);
+  animation: shimmer 4.5s ease-in-out infinite;
+}
+
+.wave {
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  height: 70px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 100%, transparent 45%, rgba(186, 231, 255, 0.2) 46% 52%, transparent 54%),
+    linear-gradient(90deg, transparent, rgba(173, 225, 255, 0.16), transparent);
+  opacity: 0.78;
+}
+
+.wave-one {
+  top: 16%;
+  animation: waveMove 7s ease-in-out infinite;
+}
+
+.wave-two {
+  top: 38%;
+  opacity: 0.58;
+  animation: waveMove 9s ease-in-out infinite reverse;
+}
+
+.wave-three {
+  top: 62%;
+  opacity: 0.42;
+  animation: waveMove 11s ease-in-out infinite;
 }
 
 .letter {
@@ -73,8 +193,8 @@ body {
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 70px rgba(12, 8, 28, 0.34);
+  background: rgba(5, 18, 36, 0.38);
+  box-shadow: 0 24px 70px rgba(1, 8, 22, 0.38);
   backdrop-filter: blur(12px);
   animation: softFloat 5s ease-in-out infinite;
 }
@@ -85,7 +205,9 @@ h1 {
   font-weight: 700;
   line-height: 1.18;
   letter-spacing: 0;
-  text-shadow: 0 6px 22px rgba(255, 117, 168, 0.28);
+  text-shadow:
+    0 0 18px rgba(174, 219, 255, 0.36),
+    0 6px 22px rgba(255, 117, 168, 0.28);
 }
 
 .love-button {
@@ -94,12 +216,12 @@ h1 {
   padding: 0 24px;
   border: 0;
   border-radius: 999px;
-  color: #5a1836;
+  color: #082136;
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0;
-  background: linear-gradient(135deg, #fff2f7, #ffabc9);
-  box-shadow: 0 12px 28px rgba(255, 108, 157, 0.32);
+  background: linear-gradient(135deg, #fff7eb, #8bdcff);
+  box-shadow: 0 12px 28px rgba(82, 195, 255, 0.32);
   cursor: pointer;
   transition:
     transform 0.25s ease,
@@ -110,7 +232,7 @@ h1 {
 .love-button:hover,
 .love-button:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(255, 108, 157, 0.42);
+  box-shadow: 0 16px 34px rgba(82, 195, 255, 0.42);
   outline: none;
 }
 
@@ -123,11 +245,11 @@ h1 {
 .message {
   min-height: 120px;
   margin: 28px auto 0;
-  color: #fff4f8;
+  color: #fff8f4;
   font-size: clamp(1.05rem, 4.5vw, 1.35rem);
   line-height: 1.85;
   text-align: left;
-  text-shadow: 0 2px 14px rgba(53, 17, 40, 0.42);
+  text-shadow: 0 2px 14px rgba(1, 11, 24, 0.58);
   opacity: 0;
 }
 
@@ -143,7 +265,7 @@ h1 {
   margin-left: 3px;
   vertical-align: -0.18em;
   content: "";
-  background: #ffd3e2;
+  background: #b9e8ff;
   animation: cursorBlink 0.8s steps(1) infinite;
 }
 
@@ -171,13 +293,70 @@ h1 {
   from {
     background-position:
       0 0,
-      28px 42px;
+      34px 52px,
+      76px 18px;
   }
 
   to {
     background-position:
-      76px 76px,
-      146px 160px;
+      168px 84px,
+      298px 184px,
+      254px 196px;
+  }
+}
+
+@keyframes moonGlow {
+  0%,
+  100% {
+    opacity: 0.92;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.04);
+  }
+}
+
+@keyframes shootingStar {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-24deg);
+  }
+
+  76% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 0;
+    transform: translate3d(-260px, 126px, 0) rotate(-24deg);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translateX(-50%) perspective(280px) rotateX(64deg) scaleX(0.92);
+  }
+
+  50% {
+    opacity: 0.64;
+    transform: translateX(-50%) perspective(280px) rotateX(64deg) scaleX(1.06);
+  }
+}
+
+@keyframes waveMove {
+  0%,
+  100% {
+    transform: translateX(-24px) translateY(0) scaleY(1);
+  }
+
+  50% {
+    transform: translateX(24px) translateY(-8px) scaleY(1.12);
   }
 }
 
@@ -220,6 +399,16 @@ h1 {
     border-radius: 16px;
   }
 
+  .sky-sea::before {
+    top: 8%;
+    width: 112px;
+    height: 112px;
+  }
+
+  .sea {
+    height: 43%;
+  }
+
   .message {
     min-height: 150px;
   }
@@ -230,6 +419,10 @@ h1 {
   .stars,
   .stars::before,
   .stars::after,
+  .shooting-star,
+  .sky-sea::before,
+  .moon-road,
+  .wave,
   .letter,
   .message.typing::after,
   .heart {
